@@ -106,16 +106,21 @@ int main()
     const int buf_length = 256;
     char buf[buf_length];
 
-    for(int i =0 ; i < 256 ; i++){
+    // Header
+    buf[0] = 0x81;
+    buf[1] = 0x82;
+    buf[2] = 0x83;
+    //buf[3] ~ buf[255] : data
+    for(int i =3 ; i < 256 ; i++){
         buf[i] = 0;
     }
+    transfer(fd, buf, 256);
 
-    buf[0] = 128+6;
-    transfer(fd, buf, 1);
-    buf[0] = 0;
-    transfer(fd, buf, 1);
-    buf[0] = 0;
-    transfer(fd, buf, 1);
+    //Reauesting return value
+    buf[0] = 0x84;
+    buf[1] = 0x85;
+    buf[2] = 0x86;
+    transfer(fd, buf, 3);
 
     puts("");
     printf("spi transfer delay time (micro second) : %f\n", (double)sum_clock / CLOCKS_PER_SEC *1000 * 1000);
