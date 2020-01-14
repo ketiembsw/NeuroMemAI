@@ -34,7 +34,7 @@ $ sudo raspi-config
 P4 SPI 선택 하고 Enable 선택
 ```
 
-8. 다음 핀맵 참고하여 과기대 보드와 연결
+8. 다음 핀맵 참고하여 과기대 보드와 연결  
 19번 MOSI  
 21번 MISO  
 22번 SCLK  
