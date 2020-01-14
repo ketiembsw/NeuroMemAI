@@ -35,6 +35,10 @@ P4 SPI 선택 하고 Enable 선택
 ```
 
 8. 다음 핀맵 참고하여 과기대 보드와 연결
+19번 MOSI  
+21번 MISO  
+22번 SCLK  
+24번 CE0 (=Slave Select 0)
 ![image](https://user-images.githubusercontent.com/11454375/72321795-26d49500-36e8-11ea-82ee-7398960c7743.png)
 
 9. 다음과 같이 본경로의 C 파일을 컴파일 하여 통신 확인
