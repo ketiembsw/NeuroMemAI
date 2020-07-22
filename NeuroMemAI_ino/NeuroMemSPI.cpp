@@ -19,7 +19,7 @@
 /*				Include File Definitions						*/
 /* ------------------------------------------------------------ */
 
-#include <NeuroMemSPI.h>
+#include "NeuroMemSPI.h"
 
 using namespace std;
 extern "C" {
@@ -31,7 +31,7 @@ extern "C" {
 #define HW_NEUROSHIELD 2 // neuron access through SPI_CS pin 7
 #define HW_COGNISTAMP 3 // neuron access through SPI_CS pin 10
 #define HW_NEUROTILE 4 // neuron access through SPI_CS pin 10
-#define HW_SUTFPGA 5 // neuron access through SPI_CS pin 8
+#define HW_COMPANION 6
 
 // SPI chip select pin
 #define NM_CS_BRAINCARD 10
@@ -49,10 +49,6 @@ extern "C" {
 
 #define SPI_CLK_DIV	SPI_CLOCK_DIV8
 
-int SPISelectPin;
-int SPIspeed;
-
-int FPGAFlashPin = 8;
 
 NeuroMemSPI::NeuroMemSPI(){	
 }
@@ -77,14 +73,6 @@ int NeuroMemSPI::connect(int Platform)
 			digitalWrite(5, LOW); // pin Arduino_CON
 			pinMode (6, OUTPUT); //pin Arduino_SD_CS
 			digitalWrite(6,HIGH); // pin Arduino_SD_CS
-			delay(100);
-			break;
-		case HW_SUTFPGA:
-			SPI.setClockDivider(SPI_CLOCK_DIV8);
-			SPISelectPin = NM_CS_SUTFPGA;
-			SPIspeed= CK_SUTFPGA;
-			pinMode (SPISelectPin, OUTPUT);
-			digitalWrite(SPISelectPin, HIGH);
 			delay(100);
 			break;
 		case HW_COGNISTAMP:
@@ -126,6 +114,7 @@ int NeuroMemSPI::connect(int Platform)
 	} 
 	// If NM chip present and SPI comm successful
 	// Read MINIF (reg 6) and verify that it is equal to 
+	Serial.println("NeuroMemSPI::connect");
 	if(read(1, 6)==2)return(0);else return(1); 
 }
 // --------------------------------------------------------

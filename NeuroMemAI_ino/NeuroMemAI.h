@@ -22,27 +22,28 @@ class NeuroMemAI
 		int navail=0; // initialized during the begin function
 		
 		NeuroMemAI();
-		int begin(int Platform);
-		void forget();
-		void forget(int Maxif);
-		void clearNeurons();
-		int countNeuronsAvailable();
+		int testCall();
+		virtual int begin(int Platform);
+		virtual void forget();
+		virtual void forget(int Maxif);
+		virtual void clearNeurons();
+		virtual int countNeuronsAvailable();
 		
-		void setContext(int context, int minif, int maxif);
-		void getContext(int* context, int* minif, int* maxif);
-		void setRBF();
-		void setKNN();
+		virtual void setContext(int context, int minif, int maxif);
+		virtual void getContext(int* context, int* minif, int* maxif);
+		virtual void setRBF();
+		virtual void setKNN();
 		
-		int broadcast(int vector[], int length);
-		int learn(int vector[], int length, int category);
-		int classify(int vector[], int length);
-		int classify(int vector[], int length, int* distance, int* category, int* nid);
-		int classify(int vector[], int length, int K, int distance[], int category[], int nid[]);
+		virtual int broadcast(int vector[], int length);
+		virtual int learn(int vector[], int length, int category);
+		virtual int classify(int vector[], int length);
+		virtual int classify(int vector[], int length, int* distance, int* category, int* nid);
+		virtual int classify(int vector[], int length, int K, int distance[], int category[], int nid[]);
 
-		void readNeuron(int nid, int model[], int* context, int* aif, int* category);
-		void readNeuron(int nid, int neuron[]);
-		int readNeurons(int neurons[]);
-		void writeNeurons(int neurons[], int ncount);
+		virtual void readNeuron(int nid, int model[], int* context, int* aif, int* category);
+		virtual void readNeuron(int nid, int neuron[]);
+		virtual int readNeurons(int neurons[]);
+		virtual void writeNeurons(int neurons[], int ncount);
 	
 		//--------------------------
 		// NeuroMem register access
@@ -51,30 +52,30 @@ class NeuroMemAI
 		// refer to the http://www.general-vision.com/documentation/TM_NeuroMem_Technology_Reference_Guide.pdf
 		//
 		//--------------------------
-		int NCOUNT();
-		void GCR(int value);
-		int GCR();
-		void MINIF(int value);
-		int MINIF();
-		void MAXIF(int value);
-		int MAXIF();
-		void NSR(int value);
-		int NSR();
-		void AIF(int value);
-		int AIF();
-		void CAT(int value);
-		int CAT();
-		void NID(int value);
-		int DIST();
-		void RESETCHAIN();
-		void NCR(int value);
-		int NCR();		
-		void COMP(int value);
-		int COMP();
-		void LCOMP(int value);
-		int LCOMP();
-		void TESTCAT(int value);
-		void TESTCOMP(int value);
+		virtual int NCOUNT();
+		virtual void GCR(int value);
+		virtual int GCR();
+		virtual void MINIF(int value);
+		virtual int MINIF();
+		virtual void MAXIF(int value);
+		virtual int MAXIF();
+		virtual void NSR(int value);
+		virtual int NSR();
+		virtual void AIF(int value);
+		virtual int AIF();
+		virtual void CAT(int value);
+		virtual int CAT();
+		virtual void NID(int value);
+		virtual int DIST();
+		virtual void RESETCHAIN();
+		virtual void NCR(int value);
+		virtual int NCR();
+		virtual void COMP(int value);
+		virtual int COMP();
+		virtual void LCOMP(int value);
+		virtual int LCOMP();
+		//void TESTCAT(int value);
+		//void TESTCOMP(int value);
 		
 		//-----------------------------------
 		// Access to SD card
@@ -82,10 +83,11 @@ class NeuroMemAI
 		int SD_select=0;
 		bool SD_detected=false;
 		// compatible with the NeuroMem knowledge Builder knowledge files
-		int saveKnowledge_SDcard(char* filename);
-		int loadKnowledge_SDcard(char* filename);
+		virtual int saveKnowledge_SDcard(char* filename);
+		virtual int loadKnowledge_SDcard(char* filename);
+		
 		// compatible with the Image Knowledge Builder projects
-		int saveProject_SDcard(char* filename, int roiWidth, int roiHeight, int bWidth, int bHeight);
-		int loadProject_SDcard(char* filename, int* roiWidth, int* roiHeight, int* bWidth, int* bHeight);
+		virtual int saveProject_SDcard(char* filename, int roiWidth, int roiHeight, int bWidth, int bHeight);
+		virtual int loadProject_SDcard(char* filename, int* roiWidth, int* roiHeight, int* bWidth, int* bHeight);
 };
 #endif

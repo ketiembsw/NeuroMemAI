@@ -37,15 +37,18 @@ extern "C" {
 class NeuroMemSPI
 {
 	public:
-			
+		int SPISelectPin;
+		int SPIspeed;
+		int FPGAFlashPin = 8;
+
 		NeuroMemSPI();
 		int platform=0;		
-		int connect(int Platform);		
-		int FPGArev();			
-		int read(unsigned char mod, unsigned char reg);
-		void write(unsigned char mod, unsigned char reg, int data);
-		void writeAddr(long addr, int length, int data[]);
-		void readAddr(long addr, int length, int data[]);						
+		virtual int connect(int Platform);
+		virtual int FPGArev();
+		virtual int read (unsigned char mod, unsigned char reg);
+		virtual void write(unsigned char mod, unsigned char reg, int data);
+		virtual void writeAddr(long addr, int length, int data[]);
+		virtual void readAddr(long addr, int length, int data[]);
 		
 };
 #endif

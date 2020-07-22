@@ -45,9 +45,8 @@
 /* www.general-vision.com/documentation/TM_NeuroMem_API.pdf		*/
 /* ------------------------------------------------------------ */
 
-#include <NeuroMemAI.h>
-#include <NeuroMemSPI.h> // Modules and Registers are declared in NeuroMemSPI.h
-
+#include "NeuroMemAI.h"
+#include "NeuroMemSPI.h" // Modules and Registers are declared in NeuroMemSPI.h
 
 #include <SD.h>
 
@@ -56,7 +55,7 @@ extern "C" {
   #include <stdint.h>
 }
 
-NeuroMemSPI spi;
+static NeuroMemSPI spi;
 
 // ------------------------------------------------------------ //
 //    Constructor to the class NeuroMemAI
@@ -71,6 +70,7 @@ NeuroMemAI::NeuroMemAI(){
 #define HW_COGNISTAMP 3 // neuron access through SPI_CS pin 10
 #define HW_NEUROTILE 4 // neuron access through SPI_CS pin 10
 #define HW_SUTFPGA 5 // neuron access through SPI_CS pin 8
+#define HW_COMPANION 6 // neuron access through SPI_CS pin -1
 
 // SD card chip select
 #define SD_CS_BRAINCARD 9
@@ -79,8 +79,15 @@ NeuroMemAI::NeuroMemAI(){
 #define SD_CS_NEUROTILE 0
 #define SD_CS_SUTFPGA 0
 
+int NeuroMemAI::testCall() {
+	return HW_NEUROSHIELD;
+}
+
 int NeuroMemAI::begin(int Platform)
 {
+	if(Serial){
+		Serial.println("NeuroMemAI::begin is called");
+	}	
 	int error=spi.connect(Platform);
 	if (error==0) 
 	{
@@ -103,7 +110,7 @@ int NeuroMemAI::begin(int Platform)
 // ------------------------------------------------------------ 
 void NeuroMemAI::forget()
 {
-	spi.write(MOD_NM, NM_FORGET, 0);
+	spi.write(MOD_NM, NM_FORGET, 0);	
 }
 // ------------------------------------------------------------ 
 // Un-commit all the neurons, so they all become ready to learn,
@@ -540,6 +547,7 @@ int NeuroMemAI::saveKnowledge_SDcard(char* filename)
     SDfile.close();
 	return(0); 
 }
+
 // --------------------------------------------------------
 // Load the neurons with a knowledge stored in a knowledge file
 // saved in a format compatible with the NeuroMem API
@@ -590,6 +598,7 @@ int NeuroMemAI::loadKnowledge_SDcard(char* filename)
 	SDfile.close();
 	return(0); 
 }
+
 //
 // CogniSight registers
 //
